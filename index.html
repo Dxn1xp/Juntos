@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa de Imagem com Corações</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+    <article class="content">
+        <button class="button" onclick="startAnimation()">Abrir Mensagem</button>
+
+        <div class="galeria">
+            <H1>Nossa Galeria</H1>
+            <button class="sitedois"><a href="./paginas/fotos nossas.html">Abrir Galeria</a></button>
+        </div>
+
+        <div class="modal" id="myModal">
+            <button class="close" onclick="closeModal()">×</button>
+            <img id="modalImage" src="./imagens/foto.png" alt="Imagem Falhou">
+            <p id="modalText">
+                <spam>Maria Clara</spam>, eu tenho uma mensagem pra Você
+            </p>
+            <button class="next" onclick="nextImage()"><img src="./imagens/seta.png" alt="Seta"
+                    style="width: 20px; vertical-align: middle;"></button>
+        </div>
+    </article>
+
+    <script>
+        let currentImageIndex = 0;
+        const images = [
+            './imagens/foto.png',
+            './imagens/foto1.png',
+            './imagens/foto2.png',
+            './imagens/foto (3).jpg',
+            './imagens/foto1.png',
+            './imagens/foto2.png'
+        ];
+
+        const texts = [
+            "A criatividade dela brilha em todas as suas artes e canções.",
+            "Você adora aventuras e sempre se esforça para alcançar seus sonhos, eu amo isso.",
+            "Você é uma garota engraçada, amigável, criativa, determinada, empática, bonita, inspiradora. E claro, é minha menina.",
+            "Eu desejo o melhor para você, e que esse melhor aconteça comigo do seu lado.",
+            "Apesar de tudo ainda sou grato por tê-la do meu lado.",
+            "Sem você eu não sou eu, nossas fotos deixam isso claro."
+        ];
+
+        function startAnimation() {
+            openModal();
+            createHearts();
+            setTimeout(changeImage, 150000);
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function createHearts() {
+            const interval = setInterval(() => {
+                createHeart();
+            }, 600);
+
+            setTimeout(() => {
+                clearInterval(interval);
+            }, 5000);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        function changeImage() {
+            currentImageIndex++;
+            if (currentImageIndex < images.length) {
+                document.getElementById("modalImage").src = images[currentImageIndex];
+                document.getElementById("modalText").innerText = texts[currentImageIndex];
+                setTimeout(changeImage, 150000);
+            }
+        }
+
+        function nextImage() {
+            if (currentImageIndex < images.length - 1) {
+                currentImageIndex++;
+                document.getElementById("modalImage").src = images[currentImageIndex];
+                document.getElementById("modalText").innerText = texts[currentImageIndex];
+            } else {
+                currentImageIndex = 0; // Reinicia o índice se chegar ao final
+                document.getElementById("modalImage").src = images[currentImageIndex];
+                document.getElementById("modalText").innerText = texts[currentImageIndex];
+            }
+        }
+    </script>
+
+</body>
+
+</html>
